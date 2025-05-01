@@ -20,5 +20,6 @@ When does this plugin update EasyAdmin classes?
 
 * Just after installing this Composer plugin;
 * Just after installing or updating any EasyAdmin version.
+* Just after running `composer update` or `composer install` commands.
 
 [1]: https://easycorp.github.io/blog/posts/the-road-to-easyadmin-3-no-more-inheritance

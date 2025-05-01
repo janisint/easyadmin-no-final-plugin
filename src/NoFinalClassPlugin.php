@@ -12,6 +12,8 @@ use Composer\Installer\PackageEvents;
 use Composer\IO\IOInterface;
 use Composer\Package\PackageInterface;
 use Composer\Plugin\PluginInterface;
+use Composer\Script\Event;
+use Composer\Script\ScriptEvents;
 
 final class NoFinalClassPlugin implements PluginInterface, EventSubscriberInterface
 {
@@ -27,6 +29,8 @@ final class NoFinalClassPlugin implements PluginInterface, EventSubscriberInterf
         return [
             PackageEvents::POST_PACKAGE_INSTALL => 'onPackageInstall',
             PackageEvents::POST_PACKAGE_UPDATE => 'onPackageUpdate',
+            ScriptEvents::POST_INSTALL_CMD => 'onInstallCmd',
+            ScriptEvents::POST_UPDATE_CMD => 'onUpdateCmd',
         ];
     }
 
@@ -53,6 +57,16 @@ final class NoFinalClassPlugin implements PluginInterface, EventSubscriberInterf
             return;
         }
 
+        $this->removeFinalFromAllEasyAdminClasses();
+    }
+
+    public function onInstallCmd(Event $event)
+    {
+        $this->removeFinalFromAllEasyAdminClasses();
+    }
+
+    public function onUpdateCmd(Event $event)
+    {
         $this->removeFinalFromAllEasyAdminClasses();
     }
 
